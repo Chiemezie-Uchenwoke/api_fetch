@@ -1,0 +1,111 @@
+APIs allow different software applications to communicate with each other, enabling developers to access and retrieve data from various sources.
+
+By default, fetch() makes a GET request.
+
+The fetch() function returns a Promise which is fulfilled with a Response object representing the server's response. You can then check the request status and extract the body of the response in various formats, including text and JSON, by calling the appropriate method on the response.
+
+Here's a simple example of a basic fetch request:
+
+fetch('https://jsonplaceholder.typicode.com/todos/1')
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error('Error:', error));
+
+
+
+  Another example
+  // Specify the API endpoint for user data
+const apiUrl = 'https://jsonplaceholder.typicode.com/todos/1';
+
+// Make a GET request using the Fetch API
+fetch(apiUrl)
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(userData => {
+    // Process the retrieved user data
+    console.log('User Data:', userData);
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+
+
+
+
+How to Make a POST Request
+While GET requests are used for retrieving data, POST requests are used to send data to a server. This is commonly used when submitting forms or sending data to create a new resource. Let's explore how to make a POST request using the Fetch API.
+
+Example: Sending Form Data
+Suppose we have a simple form with user details, and we want to send this data to a server to create a new user. Here's how you can make a POST request:
+
+// API endpoint for creating a new user
+const apiUrl = 'https://api.example.com/users';
+
+// Form data to be sent in the request body
+const formData = {
+  username: 'john_doe',
+  email: 'john@example.com',
+  password: 'securepassword123',
+};
+
+// Make a POST request using the Fetch API
+fetch(apiUrl, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(formData),
+})
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(newUserData => {
+    // Process the newly created user data
+    console.log('New User Data:', newUserData);
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+
+
+
+
+Example: Filtering Data with Query Parameters
+Suppose we want to retrieve a list of users based on a specific criteria, such as users who have registered in the last 30 days. We can achieve this by including query parameters in the URL:
+
+// API endpoint for fetching recent users
+const apiUrl = 'https://jsonplaceholder.typicode.com/todos/1';
+
+// Set up query parameters
+const queryParams = {
+  timeframe: '30days',
+};
+
+// Convert query parameters to a string
+const queryString = new URLSearchParams(queryParams).toString();
+
+// Combine API endpoint with query parameters
+const fullUrl = `${apiUrl}?${queryString}`;
+
+// Make a GET request using the Fetch API
+fetch(fullUrl)
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(recentUsers => {
+    // Process the list of recent users
+    console.log('Recent Users:', recentUsers);
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
